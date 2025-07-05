@@ -24,6 +24,88 @@ const opportunities: Opportunity[] = [
     date: new Date(),
     organizationId: organization.id,
   },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Great opportunity",
+    description: "So good, so great, check it out now!",
+    location: "San Diego",
+    date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Looking for a thing or two",
+    description: "Looking for some stuff...",
+    location: "New York",
+    date: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Biiiiiiiiiiiiiiiiiiiiig Titleeeeeeeeeeeeee",
+    description: "This is big title opportunity!",
+    location: "Austin",
+    date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Quite Normal Title",
+    description: `However the description is gonna be quite long, like idk how
+    long maybe a couple hundred lines of this: LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE
+    LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LINE LIN`,
+    location: "Does it even matter?",
+    date: new Date(Date.now() + 16 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Last but not least",
+    description: "OMG how kawaii desu neeee!",
+    location: "Tokyo",
+    date: new Date(Date.now() + 19 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Bro what do i write here?",
+    description: "Oh that's right it was the title.",
+    location: "Warsaw",
+    date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
+  {
+    id: uuidv4(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    title: "Ok this time for real, it's the last one",
+    description: "Seeding is so fun!",
+    location: "Seed Town",
+    date: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000),
+    organizationId: organization.id,
+  },
 ];
 
 const main = async () => {
