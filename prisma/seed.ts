@@ -1,6 +1,7 @@
 import { prisma } from "../src/config/prisma.config";
 import { Opportunity, Role, User } from "../src/generated/prisma";
 import { v4 as uuidv4 } from "uuid";
+import { hashSync } from "bcrypt-ts";
 
 const organization: User = {
   id: uuidv4(),
@@ -8,7 +9,7 @@ const organization: User = {
   updatedAt: new Date(),
   email: "organization.user@mail.com",
   emailVerified: true,
-  hashedPassword: "b2Jl1BMapL4Msdja1ldazot592",
+  hashedPassword: hashSync("password123"),
   role: Role.ORGANIZATION,
 };
 
