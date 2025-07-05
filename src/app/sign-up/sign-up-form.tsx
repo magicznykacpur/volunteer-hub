@@ -10,17 +10,23 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Role } from "@/generated/prisma";
+import { capitalize } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import * as z from "zod/v4";
-import {
-  isLoginError,
-  LoginActionErrorPayload,
-  LoginActionPayload,
-  LoginFormType,
-} from "./login-types";
-import login from "./login.actions";
+import { SignupActionPayload, SignupFormType } from "./sign-up-types";
+import signUp from "./sign-up.actions";
+import { toast } from "react-toastify";
 
 type LoginFormProps = {
   open: boolean;
@@ -30,41 +36,45 @@ type LoginFormProps = {
 const schema = z.object({
   email: z.email("Email format invalid"),
   password: z.string().min(1, "You must provide a password"),
+  role: z.enum([Role.ORGANIZATION, Role.VOLUNTEER], {
+    message: "You must select a role",
+  }),
 });
 
-export default function LoginForm({ open, setOpen }: LoginFormProps) {
+export default function SignupForm({ open, setOpen }: LoginFormProps) {
   const form = useForm({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
+      role: Role.VOLUNTEER,
     },
   });
 
-  const onSubmit = async (loginForm: LoginFormType) => {
-    const result: LoginActionErrorPayload | LoginActionPayload = await login(
-      loginForm
-    );
+  const onSubmit = async (signupForm: SignupFormType) => {
+    const result: SignupActionPayload = await signUp(signupForm);
 
-    if (isLoginError(result)) {
+    if (result.errorMessage) {
       toast.error(result.errorMessage);
+      console.error(result.errorMessage)
       return;
     } else {
-      console.log("success.");
+      toast.success("Your account has been created! You can now login.")
     }
   };
 
   const emailError = form.formState.errors["email"]?.message;
   const passwordError = form.formState.errors["password"]?.message;
+  const roleError = form.formState.errors["role"]?.message;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="flex flex-col sm:max-w-[425px]">
         <DialogHeader className="flex items-center mb-4">
-          <DialogTitle>Login</DialogTitle>
+          <DialogTitle>Sign up</DialogTitle>
           <DialogDescription>
-            Provide your email and password to login
+            Provide your email, password and select a role to create an account
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -85,9 +95,24 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
               error={passwordError}
             />
           </div>
+          <Select {...form.register("role")}>
+            <SelectTrigger className="w-[240px]" aria-invalid={!!roleError}>
+              <SelectValue placeholder={capitalize(form.getValues("role"))} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Roles</SelectLabel>
+                {Object.values(Role).map((role, index) => (
+                  <SelectItem key={`role-${index}`} value={role}>
+                    {capitalize(role)}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <DialogFooter className="flex justify-end mt-4">
             <Button type="submit" size="lg" className="w-1/3">
-              Login
+              Sign up
             </Button>
           </DialogFooter>
         </form>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Slide, ToastContainer } from "react-toastify";
 import LoginManager from "./login/login-manager";
+import SignupManager from "./sign-up/sign-up-manager";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
         </div>
         <div className="flex justify-between w-3/5 mt-8">
           <LoginManager />
-          <Button className="w-2/5">Sign up</Button>
+          <SignupManager />
         </div>
       </div>
       <ToastContainer

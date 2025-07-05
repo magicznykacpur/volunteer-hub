@@ -19,7 +19,7 @@ model User {
     updatedAt      DateTime       @updatedAt
     role           Role
     email          String
-    emailVerified  Boolean
+    emailVerified  Boolean        @default(false)
     hashedPassword String
     application    Application[]
     notification   Notification[]
