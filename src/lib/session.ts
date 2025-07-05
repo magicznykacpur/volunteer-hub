@@ -18,6 +18,12 @@ export async function createSession(userId: string) {
   });
 }
 
+export async function clearSession() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("session");
+}
+
 type SessionPayload = {
   userId: string;
   expiresAt: Date;
