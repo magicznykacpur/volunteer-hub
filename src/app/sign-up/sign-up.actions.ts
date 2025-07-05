@@ -20,6 +20,10 @@ export default async function signUp({
   } catch (e: unknown) {
     const errorMessage = (e as Error).message;
 
+    if (errorMessage.includes("Unique constraint")) {
+      return { success: false, errorMessage: "Email already taken" };
+    }
+
     console.error(errorMessage);
     return { success: false, errorMessage };
   }
