@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Slide, ToastContainer } from "react-toastify";
 import LoginManager from "./login/login-manager";
 
 export default function Home() {
@@ -14,12 +15,16 @@ export default function Home() {
           applicants, and communicate with volunteers.
         </div>
         <div className="flex justify-between w-3/5 mt-8">
-          <LoginManager/>
-          <Button className="w-2/5">
-            Sign up
-          </Button>
+          <LoginManager />
+          <Button className="w-2/5">Sign up</Button>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        theme="dark"
+        transition={Slide}
+      />
     </div>
   );
 }

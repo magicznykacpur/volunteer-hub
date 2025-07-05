@@ -11,10 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { emailRegexp } from "@/lib/regular-expressions";
-import { LoginFormType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import {
+  isLoginError,
+  LoginActionErrorPayload,
+  LoginActionPayload,
+  LoginFormType,
+} from "./login-types";
+import login from "./login.actions";
+import { toast } from "react-toastify";
 
 type LoginFormProps = {
   open: boolean;
@@ -36,8 +43,17 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
     },
   });
 
-  const onSubmit = (values: LoginFormType) => {
-    console.log(values);
+  const onSubmit = async (loginForm: LoginFormType) => {
+    const result: LoginActionErrorPayload | LoginActionPayload = await login(
+      loginForm
+    );
+
+    if (isLoginError(result)) {
+      toast.error(result.errorMessage);
+      return;
+    } else {
+      console.log("success.");
+    }
   };
 
   const emailError = form.formState.errors["email"]?.message;
@@ -53,7 +69,7 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="relative mb-1">
+          <div className="relative mb-5">
             <Input
               placeholder="email"
               {...form.register("email")}
@@ -61,7 +77,7 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
               error={emailError}
             />
           </div>
-          <div className="relative">
+          <div className="relative mb-5">
             <Input
               placeholder="password"
               type="password"
