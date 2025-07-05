@@ -14,12 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as z from "zod/v4";
-import {
-  isLoginError,
-  LoginActionErrorPayload,
-  LoginActionPayload,
-  LoginFormType,
-} from "./login-types";
+import { LoginActionErrorPayload, LoginFormType } from "./login-types";
 import login from "./login.actions";
 
 type LoginFormProps = {
@@ -43,15 +38,11 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
   });
 
   const onSubmit = async (loginForm: LoginFormType) => {
-    const result: LoginActionErrorPayload | LoginActionPayload = await login(
-      loginForm
-    );
+    const result: LoginActionErrorPayload | void = await login(loginForm);
 
-    if (isLoginError(result)) {
+    if (result && result.errorMessage) {
       toast.error(result.errorMessage);
       return;
-    } else {
-      console.log("success.");
     }
   };
 
