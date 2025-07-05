@@ -77,7 +77,12 @@ export default function LoginForm({ open, setOpen }: LoginFormProps) {
             />
           </div>
           <DialogFooter className="flex justify-end mt-4">
-            <Button type="submit" size="lg" className="w-1/3">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-1/3"
+              disabled={form.formState.isSubmitting}
+            >
               Login
             </Button>
           </DialogFooter>

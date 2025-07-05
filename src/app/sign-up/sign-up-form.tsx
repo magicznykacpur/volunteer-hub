@@ -57,10 +57,10 @@ export default function SignupForm({ open, setOpen }: LoginFormProps) {
 
     if (result.errorMessage) {
       toast.error(result.errorMessage);
-      console.error(result.errorMessage)
+      console.error(result.errorMessage);
       return;
     } else {
-      toast.success("Your account has been created! You can now login.")
+      toast.success("Your account has been created! You can now login.");
     }
   };
 
@@ -111,7 +111,12 @@ export default function SignupForm({ open, setOpen }: LoginFormProps) {
             </SelectContent>
           </Select>
           <DialogFooter className="flex justify-end mt-4">
-            <Button type="submit" size="lg" className="w-1/3">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-1/3"
+              disabled={form.formState.isSubmitting}
+            >
               Sign up
             </Button>
           </DialogFooter>
