@@ -1,0 +1,59 @@
+generator client {
+    provider = "prisma-client-js"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    VOLUNTEER
+    ORGANIZATION
+}
+
+model User {
+    id             String         @id @default(uuid())
+    createdAt      DateTime       @default(now())
+    updatedAt      DateTime       @updatedAt
+    role           Role
+    email          String
+    emailVerified  Boolean
+    hashedPassword String
+    application    Application[]
+    notification   Notification[]
+    opportunity    Opportunity[]
+}
+
+model Opportunity {
+    id             String        @id @default(uuid())
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    title          String        @db.VarChar(100)
+    description    String        @db.VarChar(1024)
+    date           DateTime
+    location       String
+    organizationId String
+    organization   User          @relation(fields: [organizationId], references: [id])
+    applications   Application[]
+}
+
+model Application {
+    id            String      @id @default(uuid())
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    userId        String
+    user          User        @relation(fields: [userId], references: [id])
+    opportunityId String
+    opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+}
+
+model Notification {
+    id         String   @id @default(uuid())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    sentToUser Boolean
+    userId     String
+    user       User     @relation(fields: [userId], references: [id])
+}
