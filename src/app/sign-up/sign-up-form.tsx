@@ -19,14 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Role } from "@/generated/prisma";
 import { capitalize } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Role } from "@prisma/client";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as z from "zod/v4";
 import { SignupActionPayload, SignupFormType } from "./sign-up-types";
 import signUp from "./sign-up.actions";
-import { toast } from "react-toastify";
 
 type LoginFormProps = {
   open: boolean;

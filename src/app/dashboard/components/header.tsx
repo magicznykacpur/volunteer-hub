@@ -9,9 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Role, User } from "@/generated/prisma";
+import { logout } from "@/app/dashboard/dashboard.actions";
+import { Role, User } from "@prisma/client";
 import { Menu } from "lucide-react";
-import logout from "../dashboard.actions";
+import Link from "next/link";
 
 type HeaderProps = {
   user: User;
@@ -36,9 +37,11 @@ export default function Header({ user }: HeaderProps) {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <Link href={"/dashboard/profile"}>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+              </Link>
               {user?.role === Role.VOLUNTEER && (
-                <DropdownMenuItem>Applications</DropdownMenuItem>
+                <DropdownMenuItem>My Applications</DropdownMenuItem>
               )}
               {user?.role === Role.ORGANIZATION && (
                 <DropdownMenuItem>Opportunites</DropdownMenuItem>

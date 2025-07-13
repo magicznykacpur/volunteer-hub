@@ -1,4 +1,4 @@
-import useUser from "@/lib/useUser";
+import useUser from "@/lib/hooks/useUser";
 import Header from "./components/header";
 
 export default async function DashboardLayout({
