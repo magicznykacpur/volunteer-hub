@@ -1,5 +1,7 @@
 "use client";
 
+import { logout } from "@/app/dashboard/dashboard.actions";
+import ThemeToggle from "@/components/theme/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logout } from "@/app/dashboard/dashboard.actions";
 import { Role, User } from "@prisma/client";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -24,16 +25,19 @@ export default function Header({ user }: HeaderProps) {
   };
 
   return (
-    <header className="flex justify-between items-center p-6 bg-gray-500 text-white">
+    <header className="flex justify-between items-center p-6 dark:bg-gray-900 bg-gray-700 text-white">
       <strong>VolunteerHub</strong>
 
-      <div className="flex">
-        <strong>{user?.email}</strong>
+      <div className="flex items-center">
+        <ThemeToggle />
+
+        <strong className="ml-4">{user?.email}</strong>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Menu className="ml-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="p-4 my-1 mr-6 bg-gray-100">
+          <DropdownMenuContent className="p-4 my-1 mr-6">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

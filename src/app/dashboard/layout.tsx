@@ -9,7 +9,7 @@ export default async function DashboardLayout({
   const user = await useUser()
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <Header user={user!} />
       {children}
     </div>
