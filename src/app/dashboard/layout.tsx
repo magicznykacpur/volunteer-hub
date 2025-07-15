@@ -1,4 +1,3 @@
-import useUser from "@/lib/hooks/useUser";
 import Header from "./components/header";
 
 export default async function DashboardLayout({
@@ -6,11 +5,9 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await useUser()
-
   return (
     <div className="min-h-screen">
-      <Header user={user!} />
+      <Header />
       {children}
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { logout } from "@/app/dashboard/dashboard.actions";
 import ThemeToggle from "@/components/theme/theme-toggle";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,21 +12,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Role, User } from "@prisma/client";
+import { getMe } from "@/lib/api/user";
+import { useBoundStore } from "@/stores/bound-store";
+import { Role } from "@prisma/client";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
 
-type HeaderProps = {
-  user: User;
-};
+export default function Header() {
+  const { user, setUser } = useBoundStore();
 
-export default function Header({ user }: HeaderProps) {
   const handleLogout = async () => {
     await logout();
   };
 
+  const fetchUser = async () => {
+    if (!user) {
+      const fetchedUser = await getMe();
+      fetchedUser && setUser(fetchedUser);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <header className="flex justify-between items-center p-6 bg-zinc-600 text-white">
+    <header
+      className="flex justify-between items-center p-6 bg-zinc-600 text-white"
+      suppressHydrationWarning
+    >
       <strong>VolunteerHub</strong>
 
       <div className="flex items-center">
