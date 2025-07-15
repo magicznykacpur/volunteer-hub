@@ -2,7 +2,6 @@
 
 import { logout } from "@/app/dashboard/dashboard.actions";
 import ThemeToggle from "@/components/theme/theme-toggle";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,22 +14,39 @@ import {
 import { getMe } from "@/lib/api/user";
 import { useBoundStore } from "@/stores/bound-store";
 import { Role } from "@prisma/client";
-import { Menu } from "lucide-react";
+import { Loader2, Menu } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+type FetchingUser = "fetching" | "success" | "error";
 
 export default function Header() {
+  const [isFetchingUser, setIsFetchingUser] =
+    useState<FetchingUser>("fetching");
   const { user, setUser } = useBoundStore();
 
   const handleLogout = async () => {
+    setIsFetchingUser("fetching");
+    setUser(undefined);
     await logout();
   };
 
   const fetchUser = async () => {
     if (!user) {
+      setIsFetchingUser("fetching");
+
       const fetchedUser = await getMe();
-      fetchedUser && setUser(fetchedUser);
+
+      if (fetchedUser) {
+        setIsFetchingUser("success");
+        setUser(fetchedUser);
+        return;
+      }
+
+      setIsFetchingUser("error");
     }
+
+    setIsFetchingUser("success");
   };
 
   useEffect(() => {
@@ -46,6 +62,10 @@ export default function Header() {
 
       <div className="flex items-center">
         <ThemeToggle />
+
+        {isFetchingUser === "fetching" && (
+          <Loader2 size={24} className="ml-5 animate-spin" />
+        )}
 
         {user && (
           <>

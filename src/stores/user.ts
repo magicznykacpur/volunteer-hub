@@ -3,11 +3,11 @@ import { StateCreator } from "zustand";
 
 export type UserSlice = {
   user?: User;
-  setUser: (user: User) => void;
+  setUser: (user: User | undefined) => void;
 };
 
 export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
   set
 ) => ({
-  setUser: (user: User) => set((state) => ({ ...state, user: user })),
+  setUser: (user: User | undefined) => set(() => ({ user })),
 });
