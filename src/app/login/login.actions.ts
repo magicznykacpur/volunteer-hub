@@ -1,13 +1,10 @@
 "use server";
 
-import { prisma } from "@/config/prisma.config";
+import { getUserByEmail } from "@/lib/api/user";
 import { createSession } from "@/lib/session";
 import { compareSync } from "bcrypt-ts";
 import { redirect } from "next/navigation";
-import {
-  LoginActionErrorPayload,
-  LoginFormType
-} from "./login-types";
+import { LoginActionErrorPayload, LoginFormType } from "./login-types";
 
 const loginActionErrorPayload = { errorMessage: "Email or password incorrect" };
 
@@ -16,7 +13,8 @@ export default async function login({
   password,
 }: LoginFormType): Promise<LoginActionErrorPayload | void> {
   try {
-    const user = await prisma.user.findFirst({ where: { email } });
+    const user = await getUserByEmail(email);
+    
     if (!user) {
       return loginActionErrorPayload;
     }
@@ -32,5 +30,5 @@ export default async function login({
     return { errorMessage: (e as Error).message };
   }
 
-  redirect("/dashboard")
+  redirect("/dashboard");
 }

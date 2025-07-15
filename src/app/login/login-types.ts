@@ -1,4 +1,4 @@
-import { User } from "@/generated/prisma";
+import { User } from "@prisma/client";
 
 export type LoginFormType = { email: string; password: string };
 

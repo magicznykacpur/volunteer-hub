@@ -1,8 +1,8 @@
 "use server";
 
-import { prisma } from "@/config/prisma.config";
-import { SignupActionPayload, SignupFormType } from "./sign-up-types";
+import { createUser } from "@/lib/api/user";
 import { hashSync } from "bcrypt-ts";
+import { SignupActionPayload, SignupFormType } from "./sign-up-types";
 
 export default async function signUp({
   email,
@@ -12,9 +12,7 @@ export default async function signUp({
   try {
     const hashedPassword = hashSync(password);
 
-    await prisma.user.create({
-      data: { email, hashedPassword, role, emailVerified: false },
-    });
+    await createUser(email, hashedPassword, role);
 
     return { success: true };
   } catch (e: unknown) {

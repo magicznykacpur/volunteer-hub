@@ -12,17 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getMe } from "@/lib/api/user";
+import { FetchingState } from "@/lib/types";
 import { useBoundStore } from "@/stores/bound-store";
 import { Role } from "@prisma/client";
 import { Loader2, Menu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type FetchingUser = "fetching" | "success" | "error";
-
 export default function Header() {
   const [isFetchingUser, setIsFetchingUser] =
-    useState<FetchingUser>("fetching");
+    useState<FetchingState>("idle");
   const { user, setUser } = useBoundStore();
 
   const handleLogout = async () => {
